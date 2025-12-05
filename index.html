@@ -156,8 +156,6 @@ h3 {
 }
 
 /* ---------------- VIDEO LAYOUT ---------------- */
-
-/* Video box sizing */
 .video-box {
     width: 100%;
     max-width: 100%;
@@ -167,7 +165,6 @@ h3 {
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.25);
 }
 
-/* Row for side-by-side layout */
 .video-row {
     display: flex;
     justify-content: center;
@@ -177,7 +174,6 @@ h3 {
     margin-top: 10px;
 }
 
-/* Each column */
 .video-col {
     flex: 1 1 260px;
     max-width: 320px;
@@ -211,7 +207,6 @@ h3 {
     background: #444;
 }
 
-/* Slide number */
 .slide-num {
     font-size: 0.9rem;
     opacity: 0.7;
@@ -279,11 +274,10 @@ h3 {
     <h1>Video Evidence</h1>
 
     <div class="video-row">
-
         <div class="video-col">
             <h3>Early Semester</h3>
             <video controls class="video-box">
-                <source src="IMG_7878.mp4" type="video/mp4">
+                <source src="IMG_7878.MP4" type="video/mp4">
             </video>
             <p class="caption">This clip shows how I sounded near the beginning of the semester.</p>
         </div>
@@ -291,11 +285,10 @@ h3 {
         <div class="video-col">
             <h3>Later Semester</h3>
             <video controls class="video-box">
-                <source src="IMG_9286.mp4" type="video/mp4">
+                <source src="IMG_9286.MP4" type="video/mp4">
             </video>
             <p class="caption">This clip shows my sound after learning and practicing through the course.</p>
         </div>
-
     </div>
 
     <button class="btn back" onclick="prevSlide()">Back</button>
@@ -320,25 +313,24 @@ h3 {
     <p class="slide-num">Slide 4 of 6</p>
 </div>
 
-<!-- Slide 5 (Music & Coding Connection + Links) -->
+<!-- Slide 5 (Music → Coding Connection) -->
 <div class="slide" id="slide5">
     <h1>How Music Helped My Coding</h1>
 
     <p style="max-width:650px;margin:0 auto 20px;font-size:1.1rem;">
         Learning recorder didn’t just help me with music — it also helped me grow as a programmer.
-        Practicing rhythms, breaking songs into smaller sections, and fixing mistakes slowly all
-        trained me to think more patiently and step-by-step, which is the same mindset I used when
-        building my coding projects this semester.
+        Music trained me to slow down, think step-by-step, and be patient when fixing mistakes.  
+        These were the same skills I used when creating my coding projects this semester.
     </p>
 
     <ul class="list">
-        <li>Music practice taught me to slow down and focus on small details, the same way I debug code.</li>
-        <li>Counting beats and reading notes helped me follow sequences and patterns like in programming logic.</li>
-        <li>Performing in front of others made me more confident sharing my projects and explaining my code.</li>
-        <li>Learning from mistakes in music made it easier to keep trying when my code didn’t work the first time.</li>
+        <li>Breaking songs into small parts helped me break code problems into smaller steps.</li>
+        <li>Practicing rhythms improved my ability to follow sequences and logic in programming.</li>
+        <li>Fixing squeaks and errors taught me persistence when debugging code.</li>
+        <li>Performing boosted my confidence in presenting and explaining my projects.</li>
     </ul>
 
-    <p style="margin-top:15px;font-weight:600;">Here are two coding projects I worked on this semester:</p>
+    <p style="margin-top:15px;font-weight:600;">Here are two coding projects I created this semester:</p>
 
     <div>
         <a href="MHHP.html" class="btn" target="_blank">MHHP Project</a>
@@ -350,21 +342,22 @@ h3 {
     <p class="slide-num">Slide 5 of 6</p>
 </div>
 
-<!-- Slide 6 (Conclusion) -->
+<!-- Slide 6 (Updated Conclusion) -->
 <div class="slide" id="slide6">
     <h1>Conclusion</h1>
 
     <p style="max-width:650px;margin:0 auto 20px;font-size:1.1rem;">
-        This class completely changed how I look at music.  
-        I came in with no experience, and now I understand how much focus and practice it takes to play even simple melodies.
+        This class changed how I think about both music and coding.  
+        Starting as a complete beginner, I learned how much focus, discipline, and patience it takes 
+        to improve — skills that carried over directly into my programming work this semester.
     </p>
 
-    <ul class="list" style="margin-top:20px;">
-        <li>I learned the basics of music starting from nothing</li>
-        <li>I improved my breath control and tone quality</li>
-        <li>I can play smoother and cleaner sounds on the recorder</li>
-        <li>I developed better fingering accuracy and tonguing technique</li>
-        <li>My confidence grew a lot throughout the semester</li>
+    <ul class="list">
+        <li>Learning recorder from scratch taught me how to learn new skills step-by-step.</li>
+        <li>Practicing rhythm and timing strengthened my ability to think in patterns, just like coding.</li>
+        <li>Correcting mistakes in music helped me stay patient when debugging programs.</li>
+        <li>Performing gave me more confidence in sharing and explaining my coding projects.</li>
+        <li>This class showed me that growth in any skill — music or programming — comes from consistent effort.</li>
     </ul>
 
     <p style="margin-top:15px;">Thank you for listening</p>
@@ -394,4 +387,3 @@ function prevSlide() {
 
 </body>
 </html>
-
