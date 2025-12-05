@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Twinkle, Twinkle, Little Star — Easy Facts</title>
+<style>
+  :root{ --bg:#0f172a; --card:#0b1222; --ring:#233047; --text:#e5e7eb; --muted:#94a3b8; --accent:#fbbf24; --btn:#1f2937; }
+  body.light{ --bg:#f8fafc; --card:#ffffff; --ring:#e5e7eb; --text:#0f172a; --muted:#475569; --accent:#b45309; --btn:#e2e8f0; }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;
+    background: radial-gradient(1400px 900px at 20% 8%, #0b1222 0%, var(--bg) 60%);
+    color:var(--text); line-height:1.6; transition: background .4s ease, color .2s ease;
+  }
+  body.light{ background: radial-gradient(1400px 900px at 20% 8%, #eef2ff 0%, var(--bg) 60%); }
+
+  .wrap{max-width:900px; margin:0 auto; padding:28px 16px 90px;}
+  header{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap}
+  .title{display:flex; align-items:center; gap:12px}
+  .logo{width:46px;height:46px;display:grid;place-items:center;border-radius:14px;border:1px solid var(--ring);
+        background:linear-gradient(180deg,#1b243a,#0f1629); color:var(--accent); font-size:22px;
+        box-shadow:0 10px 30px rgba(0,0,0,.35), inset 0 0 20px rgba(251,191,36,.15)}
+  body.light .logo{background:linear-gradient(180deg,#fff,#f1f5f9)}
+  h1{font-size:clamp(1.5rem,3vw,2.2rem); margin:0}
+  .controls{display:flex; gap:8px; flex-wrap:wrap}
+  button{
+    border:1px solid var(--ring); background:var(--btn); color:var(--text);
+    padding:10px 14px; border-radius:12px; cursor:pointer; font-weight:600;
+    box-shadow:0 6px 18px rgba(0,0,0,.15);
+  }
+
+  section{
+    background:linear-gradient(180deg, var(--card), rgba(0,0,0,0));
+    border:1px solid var(--ring);
+    border-radius:16px; padding:18px; margin-top:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+  }
+  h2{font-size:1.1rem; margin:0 0 8px}
+  h3{font-size:1rem; margin:10px 0 6px}
+  .badge{display:inline-block; padding:2px 8px; border-radius:999px; border:1px solid var(--ring);
+         color:var(--muted); font-size:.82rem; margin-right:6px; margin-bottom:6px}
+  ul{margin:8px 0 0; padding-left:18px}
+  details summary{cursor:pointer; user-select:none; font-weight:600}
+  details[open] summary{color:var(--accent)}
+  .muted{color:var(--muted)}
+  footer{margin-top:22px; color:var(--muted); font-size:.92rem; text-align:center}
+
+  .stars{display:flex; gap:8px; margin-top:8px}
+  .star{width:14px;height:14px;border-radius:50%; background:linear-gradient(#fff,#ddd);
+        box-shadow:0 0 10px rgba(255,255,255,.6); animation: twinkle 2.2s infinite alternate ease-in-out}
+  .star.slow{animation-duration:3s} .star.fast{animation-duration:1.4s}
+  @keyframes twinkle{from{opacity:.4; transform:scale(.85)} to{opacity:1; transform:scale(1.15)}}
+
+  .row{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+  .lyrics{white-space:pre-line; background:rgba(0,0,0,.15); padding:12px; border-radius:12px; border:1px solid var(--ring)}
+  .timeline{list-style:none; padding:0; margin:8px 0}
+  .timeline li{padding:8px 0; border-left:3px solid var(--ring); padding-left:12px; position:relative}
+  .timeline li::before{content:""; position:absolute; left:-7px; top:14px; width:10px;height:10px; border-radius:50%; background:var(--accent)}
+
+  .quiz label{display:block; margin:.4rem 0}
+  .result{font-weight:700; margin-top:.4rem}
+  .ok{color:#22c55e} .no{color:#ef4444}
+  .small{font-size:.92rem}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <div class="logo" aria-hidden="true">★</div>
+        <div>
+          <h1>Twinkle, Twinkle, Little Star</h1>
+          <div class="muted">Easy facts • Audio • Timeline • Quiz</div>
+        </div>
+      </div>
+      <div class="controls">
+        <button id="playBtn" aria-pressed="false">▶ Play</button>
+        <button id="themeBtn" aria-pressed="false">🌙 Theme</button>
+      </div>
+    </header>
+
+    <!-- AUDIO: public-domain recording from Wikimedia Commons -->
+    <audio id="song" preload="auto" controls style="width:100%; margin-top:12px;">
+      <source src="https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bd/Twinkle_Twinkle_Little_Star_plain.ogg/Twinkle_Twinkle_Little_Star_plain.ogg.mp3" type="audio/mpeg">
+      <source src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Twinkle_Twinkle_Little_Star_plain.ogg" type="audio/ogg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <section>
+      <h2>Quick Facts</h2>
+      <span class="badge">It’s over 200 years old</span>
+      <span class="badge">Sung by kids worldwide</span>
+      <span class="badge">Perfect for bedtime</span>
+      <ul>
+        <li>The words started as a short poem in <strong>1806</strong> by Jane Taylor.</li>
+        <li>The tune came from a popular <strong>French melody</strong> people already knew.</li>
+        <li>It spread through schools and homes and never really left.</li>
+      </ul>
+      <div class="stars" aria-label="Decorative stars">
+        <div class="star"></div><div class="star slow"></div><div class="star fast"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Why People Love It</h2>
+      <ul>
+        <li><strong>Easy to remember:</strong> short lines that repeat.</li>
+        <li><strong>Easy to sing:</strong> the notes mostly go up and down smoothly.</li>
+        <li><strong>Comforting:</strong> gentle sound that helps little kids relax.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Random Facts</h2>
+      <ul>
+        <li>The melody is the same one used for some versions of the <strong>ABC song</strong> and “Baa, Baa, Black Sheep.”</li>
+        <li><strong>Mozart</strong> even wrote a set of piano pieces based on this tune when he was young.</li>
+        <li>Many people think it’s American, but the <strong>tune is French</strong> and the words are from England.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Lyrics (first verse)</h2>
+      <div class="lyrics">
+Twinkle, twinkle, little star,
+How I wonder what you are.
+Up above the world so high,
+Like a diamond in the sky.
+Twinkle, twinkle, little star,
+How I wonder what you are.
+      </div>
+    </section>
+
+    <section>
+      <h2>Short Timeline</h2>
+      <ul class="timeline">
+        <li><strong>Before 1800</strong>: The simple French tune is already popular.</li>
+        <li><strong>1806</strong>: Jane Taylor publishes the poem that becomes the lyrics.</li>
+        <li><strong>1800s</strong>: People start singing the poem to that tune; it spreads fast.</li>
+        <li><strong>Today</strong>: Known nearly everywhere as a bedtime and classroom favorite.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Player Extras</h2>
+      <div class="row">
+        <label for="tempo"><strong>Speed:</strong> <span id="tempoValue">1.0×</span></label>
+        <input id="tempo" type="range" min="0.5" max="1.5" step="0.05" value="1.0" />
+        <label class="badge" style="cursor:pointer"><input type="checkbox" id="loopChk" /> Loop</label>
+      </div>
+      <p class="muted small">Tip: Slow it down for learning the words; bring it back to normal speed when ready.</p>
+    </section>
+
+    <section>
+      <h2>Mini Quiz</h2>
+      <p><strong>Which statement is true?</strong></p>
+      <label><input type="radio" name="q1" value="a"> The words were written in 1906.</label><br>
+      <label><input type="radio" name="q1" value="b"> The melody started as a French tune.</label><br>
+      <label><input type="radio" name="q1" value="c"> It was first written for rock concerts.</label><br>
+      <button id="checkQuiz">Check</button>
+      <div id="quizResult" class="muted" aria-live="polite" style="margin-top:.4rem"></div>
+    </section>
+
+
+  </div>
+
+<script>
+/* Theme toggle (persists) */
+(function(){
+  const btn = document.getElementById('themeBtn');
+  const saved = localStorage.getItem('theme');
+  if(saved === 'light') document.body.classList.add('light');
+  const setLabel = () => btn.textContent = document.body.classList.contains('light') ? '☀️ Theme' : '🌙 Theme';
+  setLabel();
+  btn.addEventListener('click', () => {
+    document.body.classList.toggle('light');
+    localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+    setLabel();
+  });
+})();
+
+/* Play/Pause button (works with built-in controls) */
+(function(){
+  const audio = document.getElementById('song');
+  const playBtn = document.getElementById('playBtn');
+  function update(){ playBtn.textContent = (!audio.paused && !audio.ended) ? '⏸ Pause' : '▶ Play'; }
+  playBtn.addEventListener('click', async ()=>{
+    if (audio.paused) await audio.play(); else audio.pause();
+    update();
+  });
+  audio.addEventListener('play', update);
+  audio.addEventListener('pause', update);
+  audio.addEventListener('ended', update);
+})();
+
+/* Speed + Loop controls */
+(function(){
+  const audio = document.getElementById('song');
+  const tempo = document.getElementById('tempo');
+  const tempoValue = document.getElementById('tempoValue');
+  const loopChk = document.getElementById('loopChk');
+
+  function applySpeed(v){
+    audio.playbackRate = parseFloat(v);
+    tempoValue.textContent = audio.playbackRate.toFixed(2) + '×';
+  }
+  applySpeed(tempo.value);
+  tempo.addEventListener('input', e => applySpeed(e.target.value));
+
+  loopChk.addEventListener('change', e => { audio.loop = e.target.checked; });
+})();
+
+/* Quiz */
+(function(){
+  const btn = document.getElementById('checkQuiz');
+  const result = document.getElementById('quizResult');
+  btn.addEventListener('click', ()=>{
+    const picked = document.querySelector('input[name="q1"]:checked');
+    if(!picked){ result.textContent='Pick an option!'; result.className='muted'; return; }
+    if(picked.value==='b'){ result.textContent='Correct! The tune started in France.'; result.className='ok'; }
+    else { result.textContent='Not quite. Try again!'; result.className='no'; }
+  });
+})();
+</script>
+</body>
+</html>
