@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Recorder Beginner — Twinkle (C C G G A A G | F F E E D D C)</title>
+<style>
+  :root{--bg:#0f172a;--card:#111827;--ring:#233047;--text:#e5e7eb;--muted:#94a3b8;--accent:#fbbf24}
+  *{box-sizing:border-box} body{margin:0;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+  .wrap{max-width:900px;margin:0 auto;padding:24px 14px 64px}
+  h1{margin:0 0 6px;font-size:clamp(1.2rem,3vw,1.9rem)} .muted{color:var(--muted)}
+  .card{background:linear-gradient(180deg,var(--card),rgba(0,0,0,.03));border:1px solid var(--ring);border-radius:14px;padding:14px;margin-top:12px}
+  button{border:1px solid var(--ring);background:#1f2937;color:var(--text);padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap} input[type="range"]{width:200px}
+  .pill{border:1px solid var(--ring);border-radius:999px;padding:2px 10px;color:var(--muted)}
+  .bigNote{font-size:3.5rem;font-weight:900;color:var(--accent);letter-spacing:.03em}
+  .bar{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+  .beat{min-width:24px;padding:2px 10px;border:1px solid var(--ring);border-radius:999px;color:var(--muted)}
+  .beat.on{background:var(--accent);color:#0b1222;border-color:var(--accent)}
+  .staffwrap{overflow-x:auto}
+  /* fingering diagram (thumb + 1..7) */
+  .rec{width:130px;height:320px;border:1px solid var(--ring);border-radius:12px;background:#0b1222;position:relative}
+  .hole{width:26px;height:26px;border-radius:50%;border:2px solid #cbd5e1;background:transparent;position:absolute;left:50%;transform:translateX(-50%)}
+  .on{background:#e5e7eb} #thumb{top:12px}
+  #h1{top:52px} #h2{top:88px} #h3{top:124px} #h4{top:160px}
+  #h5{top:196px} #h6{top:232px} #h7{top:268px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Recorder Beginner Twinkle</h1>
+  <div class="muted">All quarter notes • Soprano recorder • Current note highlighted on staff</div>
+
+  <section class="card">
+    <div class="row">
+      <button id="startBtn">▶ Start</button>
+      <button id="stopBtn">⏹ Stop</button>
+      <label class="pill">Tempo <span id="bpmVal">80</span> BPM</label>
+      <input id="bpm" type="range" min="60" max="120" step="2" value="80" />
+      <label class="pill"><input id="loop" type="checkbox" checked> Loop</label>
+      <label class="pill"><input id="showNames" type="checkbox" checked> Show note names</label>
+    </div>
+    <div class="muted" style="margin-top:6px">
+
+    </div>
+  </section>
+
+  <section class="card staffwrap">
+    <strong>Staff (treble clef)</strong>
+    <svg id="staff" viewBox="0 0 1400 240" width="100%" height="240" role="img" aria-label="Twinkle line on staff">
+      <!-- 5 lines (top to bottom) -->
+      <g stroke="#5f6e85" stroke-width="2">
+        <line x1="0" y1="60" x2="1400" y2="60"/>
+        <line x1="0" y1="90" x2="1400" y2="90"/>
+        <line x1="0" y1="120" x2="1400" y2="120"/>
+        <line x1="0" y1="150" x2="1400" y2="150"/>
+        <line x1="0" y1="180" x2="1400" y2="180"/>
+      </g>
+      <!-- notes injected by JS -->
+    </svg>
+    <div class="muted">Gold = current note.</div>
+  </section>
+
+  <section class="card">
+    <div class="row" style="align-items:flex-start;justify-content:space-between">
+      <div>
+        <div class="muted">Current note</div>
+        <div id="noteNow" class="bigNote">—</div>
+        <div class="bar" id="barView"></div>
+      </div>
+      <div>
+        <div class="muted"><b>Cover these holes</b> (filled = cover). Top small circle is the <b>thumb (back)</b>.</div>
+        <div class="rec">
+          <div class="hole" id="thumb"></div>
+          <div class="hole" id="h1"></div><div class="hole" id="h2"></div><div class="hole" id="h3"></div>
+          <div class="hole" id="h4"></div><div class="hole" id="h5"></div><div class="hole" id="h6"></div><div class="hole" id="h7"></div>
+        </div>
+      </div>
+    </div>
+    <div class="muted" style="margin-top:8px"><b>Practice line:</b> C C G G A A G | F F E E D D C</div>
+  </section>
+</div>
+
+<script>
+/* === Your melody (all quarter notes) === */
+const MELODY = ['C','C','G','G','A','A','G','F','F','E','E','D','D','C'];
+
+/* Staff Y positions for treble clef (B4 = middle line at y=120) */
+const NOTE_Y = {
+  // lines: 60(F5), 90(D5), 120(B4), 150(G4), 180(E4)
+  'C': 105, // C5 - 3rd space
+  'D':  90, // D5 - 4th line
+  'E':  75, // E5 - top space
+  'F':  60, // F5 - top line
+  'G': 150, // G4 - 2nd line
+  'A': 140, // A4 - 2nd space
+  'B': 120  // B4 - middle line (not used in this line but kept for completeness)
+};
+
+/* Baroque fingerings (true = cover) */
+const FINGER = {
+  C:{T:true,1:true,2:true,3:true,4:true,5:true,6:true,7:true},
+  D:{T:true,1:true,2:true,3:true,4:true,5:true,6:true,7:false},
+  E:{T:true,1:true,2:true,3:true,4:true,5:true,6:false,7:false},
+  F:{T:true,1:true,2:true,3:true,4:true,5:false,6:true,7:false}, // forked (5 open, 6 closed)
+  G:{T:true,1:true,2:true,3:true,4:false,5:false,6:false,7:false},
+  A:{T:true,1:true,2:true,3:false,4:false,5:false,6:false,7:false},
+  B:{T:true,1:true,2:false,3:false,4:false,5:false,6:false,7:false}
+};
+
+/* DOM */
+const staff = document.getElementById('staff');
+const noteNow = document.getElementById('noteNow');
+const barView = document.getElementById('barView');
+const bpmEl = document.getElementById('bpm'), bpmVal = document.getElementById('bpmVal');
+const loopEl = document.getElementById('loop'); const showNames = document.getElementById('showNames');
+const startBtn = document.getElementById('startBtn'), stopBtn = document.getElementById('stopBtn');
+
+/* Build staff notes */
+const SP = 70, R = 8, LEFT = 40;
+const totalW = LEFT + (MELODY.length)*SP + 20;
+staff.setAttribute('viewBox', `0 0 ${totalW} 240`);
+const g = document.createElementNS('http://www.w3.org/2000/svg','g'); staff.appendChild(g);
+
+MELODY.forEach((n,i)=>{
+  const x = LEFT + i*SP, y = NOTE_Y[n];
+  const head = document.createElementNS('http://www.w3.org/2000/svg','ellipse');
+  head.setAttribute('cx',x); head.setAttribute('cy',y);
+  head.setAttribute('rx',R+3); head.setAttribute('ry',R);
+  head.setAttribute('fill','#e5e7eb'); head.setAttribute('stroke','#1f2937'); head.setAttribute('stroke-width','2');
+  head.classList.add('note'); head.dataset.i=i; g.appendChild(head);
+  const stem = document.createElementNS('http://www.w3.org/2000/svg','line');
+  stem.setAttribute('x1',x+R+3); stem.setAttribute('y1',y);
+  stem.setAttribute('x2',x+R+3); stem.setAttribute('y2',y-28);
+  stem.setAttribute('stroke','#e5e7eb'); stem.setAttribute('stroke-width','2'); g.appendChild(stem);
+  const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+  label.setAttribute('x',x); label.setAttribute('y',y+24); label.setAttribute('text-anchor','middle');
+  label.setAttribute('fill','#fbbf24'); label.setAttribute('font-size','12');
+  label.textContent = n; label.classList.add('label'); g.appendChild(label);
+});
+
+function toggleNames(show){
+  document.querySelectorAll('.label').forEach(el=> el.style.display = show ? 'block' : 'none');
+}
+toggleNames(showNames.checked);
+showNames.addEventListener('change', e=> toggleNames(e.target.checked));
+
+/* Fingering holes */
+const holes = { T:thumb, 1:h1, 2:h2, 3:h3, 4:h4, 5:h5, 6:h6, 7:h7 };
+
+/* Progress chips */
+MELODY.forEach((n,i)=>{ const d=document.createElement('div'); d.className='beat'; d.textContent=n; d.dataset.i=i; barView.appendChild(d); });
+
+function highlight(i){
+  document.querySelectorAll('.beat').forEach(b=> b.classList.toggle('on', +b.dataset.i===i));
+  document.querySelectorAll('.note').forEach((el,idx)=> el.setAttribute('fill', idx===i ? '#fbbf24' : '#e5e7eb'));
+}
+
+/* Apply fingering */
+function setFingering(n){
+  noteNow.textContent = n || '—';
+  const map = FINGER[n] || {};
+  Object.keys(holes).forEach(k=> holes[k].classList.toggle('on', !!map[k]));
+}
+
+/* Timing */
+let idx=0, timer=null, playing=false;
+function msPerBeat(){ return 60000 / +bpmEl.value; }
+bpmEl.addEventListener('input', ()=> bpmVal.textContent=bpmEl.value); bpmVal.textContent=bpmEl.value;
+
+/* Soft click */
+let actx;
+function click(){
+  actx = actx || new (window.AudioContext||window.webkitAudioContext)();
+  const o=actx.createOscillator(), g=actx.createGain(), t=actx.currentTime;
+  o.type='sine'; o.frequency.value=900; g.gain.value=0.05; o.connect(g); g.connect(actx.destination);
+  o.start(t); g.gain.exponentialRampToValueAtTime(0.003, t+0.07); o.stop(t+0.07);
+}
+
+/* Stepper */
+function step(){
+  if(!playing) return;
+  const n = MELODY[idx];
+  setFingering(n); highlight(idx); click();
+  idx++;
+  if(idx>=MELODY.length){
+    if(loopEl.checked){ idx=0; }
+    else { stop(); return; }
+  }
+  timer = setTimeout(step, msPerBeat());
+}
+function play(){
+  if(playing) return; playing=true; startBtn.textContent='⏸ Pause';
+  if(actx && actx.state==='suspended') actx.resume();
+  step();
+}
+function pause(){
+  playing=false; startBtn.textContent='▶ Start';
+  if(timer){ clearTimeout(timer); timer=null; }
+}
+function stop(){
+  pause(); idx=0; setFingering(); highlight(-1);
+}
+
+/* Controls */
+startBtn.addEventListener('click', ()=> playing ? pause() : play());
+stopBtn.addEventListener('click', stop);
+
+/* Defaults */
+setFingering(); highlight(-1);
+</script>
+</body>
+</html>
