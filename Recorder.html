@@ -63,8 +63,26 @@
   .result{font-weight:700; margin-top:.4rem}
   .ok{color:#22c55e} .no{color:#ef4444}
   .small{font-size:.92rem}
+
+  /* NEW BUTTON STYLE FOR RETURN LINK */
+  .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 28px;
+      background: #BF5700;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(191, 87, 0, 0.7);
+  }
+  .back-btn:hover {
+      background: #a64c00;
+      transform: translateY(-3px);
+  }
 </style>
 </head>
+
 <body>
   <div class="wrap">
     <header>
@@ -81,24 +99,23 @@
       </div>
     </header>
 
-    <!-- AUDIO: public-domain recording from Wikimedia Commons -->
+    <!-- AUDIO -->
     <audio id="song" preload="auto" controls style="width:100%; margin-top:12px;">
       <source src="https://upload.wikimedia.org/wikipedia/commons/transcoded/b/bd/Twinkle_Twinkle_Little_Star_plain.ogg/Twinkle_Twinkle_Little_Star_plain.ogg.mp3" type="audio/mpeg">
       <source src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Twinkle_Twinkle_Little_Star_plain.ogg" type="audio/ogg">
-      Your browser does not support the audio element.
     </audio>
 
     <section>
       <h2>Quick Facts</h2>
-      <span class="badge">It’s over 200 years old</span>
+      <span class="badge">It is over 200 years old</span>
       <span class="badge">Sung by kids worldwide</span>
       <span class="badge">Perfect for bedtime</span>
       <ul>
-        <li>The words started as a short poem in <strong>1806</strong> by Jane Taylor.</li>
-        <li>The tune came from a popular <strong>French melody</strong> people already knew.</li>
-        <li>It spread through schools and homes and never really left.</li>
+        <li>The words started as a poem in 1806 by Jane Taylor.</li>
+        <li>The tune came from a well known French melody.</li>
+        <li>It spread through schools and homes and became popular.</li>
       </ul>
-      <div class="stars" aria-label="Decorative stars">
+      <div class="stars">
         <div class="star"></div><div class="star slow"></div><div class="star fast"></div>
       </div>
     </section>
@@ -106,23 +123,23 @@
     <section>
       <h2>Why People Love It</h2>
       <ul>
-        <li><strong>Easy to remember:</strong> short lines that repeat.</li>
-        <li><strong>Easy to sing:</strong> the notes mostly go up and down smoothly.</li>
-        <li><strong>Comforting:</strong> gentle sound that helps little kids relax.</li>
+        <li>It is easy to remember.</li>
+        <li>The melody is smooth and gentle.</li>
+        <li>It helps children relax.</li>
       </ul>
     </section>
 
     <section>
       <h2>Random Facts</h2>
       <ul>
-        <li>The melody is the same one used for some versions of the <strong>ABC song</strong> and “Baa, Baa, Black Sheep.”</li>
-        <li><strong>Mozart</strong> even wrote a set of piano pieces based on this tune when he was young.</li>
-        <li>Many people think it’s American, but the <strong>tune is French</strong> and the words are from England.</li>
+        <li>The tune is shared with some ABC versions and Baa Baa Black Sheep.</li>
+        <li>Mozart wrote variations of this melody when he was young.</li>
+        <li>The words are English but the melody is French.</li>
       </ul>
     </section>
 
     <section>
-      <h2>Lyrics (first verse)</h2>
+      <h2>Lyrics</h2>
       <div class="lyrics">
 Twinkle, twinkle, little star,
 How I wonder what you are.
@@ -136,38 +153,36 @@ How I wonder what you are.
     <section>
       <h2>Short Timeline</h2>
       <ul class="timeline">
-        <li><strong>Before 1800</strong>: The simple French tune is already popular.</li>
-        <li><strong>1806</strong>: Jane Taylor publishes the poem that becomes the lyrics.</li>
-        <li><strong>1800s</strong>: People start singing the poem to that tune; it spreads fast.</li>
-        <li><strong>Today</strong>: Known nearly everywhere as a bedtime and classroom favorite.</li>
+        <li>Before 1800 the tune is already known.</li>
+        <li>1806 the poem is published.</li>
+        <li>1800s people begin singing both together.</li>
+        <li>Today it is known everywhere.</li>
       </ul>
     </section>
 
     <section>
-      <h2>Player Extras</h2>
+      <h2>Player Options</h2>
       <div class="row">
         <label for="tempo"><strong>Speed:</strong> <span id="tempoValue">1.0×</span></label>
         <input id="tempo" type="range" min="0.5" max="1.5" step="0.05" value="1.0" />
-        <label class="badge" style="cursor:pointer"><input type="checkbox" id="loopChk" /> Loop</label>
+        <label class="badge"><input type="checkbox" id="loopChk" /> Loop</label>
       </div>
-      <p class="muted small">Tip: Slow it down for learning the words; bring it back to normal speed when ready.</p>
     </section>
 
     <section>
       <h2>Mini Quiz</h2>
       <p><strong>Which statement is true?</strong></p>
-      <label><input type="radio" name="q1" value="a"> The words were written in 1906.</label><br>
-      <label><input type="radio" name="q1" value="b"> The melody started as a French tune.</label><br>
-      <label><input type="radio" name="q1" value="c"> It was first written for rock concerts.</label><br>
+      <label><input type="radio" name="q1" value="a"> The words were written in 1906.</label>
+      <label><input type="radio" name="q1" value="b"> The melody came from France.</label>
+      <label><input type="radio" name="q1" value="c"> It was meant for rock concerts.</label>
       <button id="checkQuiz">Check</button>
-      <div id="quizResult" class="muted" aria-live="polite" style="margin-top:.4rem"></div>
+      <div id="quizResult" class="muted"></div>
     </section>
-
 
   </div>
 
 <script>
-/* Theme toggle (persists) */
+/* Theme toggle */
 (function(){
   const btn = document.getElementById('themeBtn');
   const saved = localStorage.getItem('theme');
@@ -181,7 +196,7 @@ How I wonder what you are.
   });
 })();
 
-/* Play/Pause button (works with built-in controls) */
+/* Play/Pause */
 (function(){
   const audio = document.getElementById('song');
   const playBtn = document.getElementById('playBtn');
@@ -195,7 +210,7 @@ How I wonder what you are.
   audio.addEventListener('ended', update);
 })();
 
-/* Speed + Loop controls */
+/* Speed + Loop */
 (function(){
   const audio = document.getElementById('song');
   const tempo = document.getElementById('tempo');
@@ -218,11 +233,24 @@ How I wonder what you are.
   const result = document.getElementById('quizResult');
   btn.addEventListener('click', ()=>{
     const picked = document.querySelector('input[name="q1"]:checked');
-    if(!picked){ result.textContent='Pick an option!'; result.className='muted'; return; }
-    if(picked.value==='b'){ result.textContent='Correct! The tune started in France.'; result.className='ok'; }
-    else { result.textContent='Not quite. Try again!'; result.className='no'; }
+    if(!picked){
+      result.textContent='Pick an option';
+      result.className='muted';
+      return;
+    }
+    if(picked.value==='b'){
+      result.textContent='Correct the tune started in France';
+      result.className='ok';
+    } else {
+      result.textContent='Not correct try again';
+      result.className='no';
+    }
   });
 })();
 </script>
+
+<!-- RETURN BUTTON (correct location) -->
+<a href="index.html" class="back-btn">Back to Presentation</a>
+
 </body>
 </html>
