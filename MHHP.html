@@ -6,24 +6,100 @@
 <title>Recorder Beginner — Twinkle (C C G G A A G | F F E E D D C)</title>
 <style>
   :root{--bg:#0f172a;--card:#111827;--ring:#233047;--text:#e5e7eb;--muted:#94a3b8;--accent:#fbbf24}
-  *{box-sizing:border-box} body{margin:0;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:system-ui,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text)
+  }
   .wrap{max-width:900px;margin:0 auto;padding:24px 14px 64px}
-  h1{margin:0 0 6px;font-size:clamp(1.2rem,3vw,1.9rem)} .muted{color:var(--muted)}
-  .card{background:linear-gradient(180deg,var(--card),rgba(0,0,0,.03));border:1px solid var(--ring);border-radius:14px;padding:14px;margin-top:12px}
-  button{border:1px solid var(--ring);background:#1f2937;color:var(--text);padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600}
-  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap} input[type="range"]{width:200px}
-  .pill{border:1px solid var(--ring);border-radius:999px;padding:2px 10px;color:var(--muted)}
-  .bigNote{font-size:3.5rem;font-weight:900;color:var(--accent);letter-spacing:.03em}
+  h1{margin:0 0 6px;font-size:clamp(1.2rem,3vw,1.9rem)}
+  .muted{color:var(--muted)}
+  .card{
+    background:linear-gradient(180deg,var(--card),rgba(0,0,0,.03));
+    border:1px solid var(--ring);
+    border-radius:14px;
+    padding:14px;
+    margin-top:12px
+  }
+  button{
+    border:1px solid var(--ring);
+    background:#1f2937;
+    color:var(--text);
+    padding:8px 12px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600
+  }
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  input[type="range"]{width:200px}
+  .pill{
+    border:1px solid var(--ring);
+    border-radius:999px;
+    padding:2px 10px;
+    color:var(--muted)
+  }
+  .bigNote{
+    font-size:3.5rem;
+    font-weight:900;
+    color:var(--accent);
+    letter-spacing:.03em
+  }
   .bar{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
-  .beat{min-width:24px;padding:2px 10px;border:1px solid var(--ring);border-radius:999px;color:var(--muted)}
-  .beat.on{background:var(--accent);color:#0b1222;border-color:var(--accent)}
+  .beat{
+    min-width:24px;
+    padding:2px 10px;
+    border:1px solid var(--ring);
+    border-radius:999px;
+    color:var(--muted)
+  }
+  .beat.on{
+    background:var(--accent);
+    color:#0b1222;
+    border-color:var(--accent)
+  }
   .staffwrap{overflow-x:auto}
   /* fingering diagram (thumb + 1..7) */
-  .rec{width:130px;height:320px;border:1px solid var(--ring);border-radius:12px;background:#0b1222;position:relative}
-  .hole{width:26px;height:26px;border-radius:50%;border:2px solid #cbd5e1;background:transparent;position:absolute;left:50%;transform:translateX(-50%)}
-  .on{background:#e5e7eb} #thumb{top:12px}
+  .rec{
+    width:130px;
+    height:320px;
+    border:1px solid var(--ring);
+    border-radius:12px;
+    background:#0b1222;
+    position:relative
+  }
+  .hole{
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    border:2px solid #cbd5e1;
+    background:transparent;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%)
+  }
+  .on{background:#e5e7eb}
+  #thumb{top:12px}
   #h1{top:52px} #h2{top:88px} #h3{top:124px} #h4{top:160px}
   #h5{top:196px} #h6{top:232px} #h7{top:268px}
+
+  /* Back button style */
+  .back-btn{
+    display:inline-block;
+    margin:0 14px 24px;
+    padding:10px 24px;
+    background:#BF5700;
+    color:#ffffff;
+    text-decoration:none;
+    font-weight:600;
+    border-radius:10px;
+    box-shadow:0 0 15px rgba(191,87,0,0.7);
+  }
+  .back-btn:hover{
+    background:#a64c00;
+    transform:translateY(-3px);
+  }
 </style>
 </head>
 <body>
@@ -149,7 +225,13 @@ showNames.addEventListener('change', e=> toggleNames(e.target.checked));
 const holes = { T:thumb, 1:h1, 2:h2, 3:h3, 4:h4, 5:h5, 6:h6, 7:h7 };
 
 /* Progress chips */
-MELODY.forEach((n,i)=>{ const d=document.createElement('div'); d.className='beat'; d.textContent=n; d.dataset.i=i; barView.appendChild(d); });
+MELODY.forEach((n,i)=>{
+  const d=document.createElement('div');
+  d.className='beat';
+  d.textContent=n;
+  d.dataset.i=i;
+  barView.appendChild(d);
+});
 
 function highlight(i){
   document.querySelectorAll('.beat').forEach(b=> b.classList.toggle('on', +b.dataset.i===i));
@@ -209,5 +291,8 @@ stopBtn.addEventListener('click', stop);
 /* Defaults */
 setFingering(); highlight(-1);
 </script>
+
+<a href="index.html" class="back-btn">Back to Presentation</a>
+
 </body>
 </html>
